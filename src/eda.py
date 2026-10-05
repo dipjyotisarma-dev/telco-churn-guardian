@@ -10,36 +10,46 @@ import pandas as pd
 import numpy as np
 
 def generate_eda_report(df: pd.DataFrame, target_col: str = "Churn") -> Dict[str, Any]:
-    """
-    Computes key statistical properties and distribution metrics across the dataset.
+    # 1. Ensure target is cleanly numeric (1 / 0)
+    target_series = df[target_col].copy()
+    if not pd.api.types.is_numeric_dtype(target_series):
+        target_series = target_series.astype(str).str.strip().map({'Yes': 1, 'No': 0})
+    target_series = pd.to_numeric(target_series, errors='coerce').fillna(0).astype(int)
 
-    Parameters:
-        df (pd.DataFrame): Cleaned DataFrame.
-        target_col (str): Name of the binary classification target.
-
-    Returns:
-        Dict[str, Any]: Structured summary dictionary.
-    """
-    target_counts = df[target_col].value_counts().to_dict()
-    target_pct = df[target_col].value_counts(normalize=True).to_dict()
+    target_counts = target_series.value_counts().to_dict()
+    target_pct = target_series.value_counts(normalize=True).to_dict()
     
     retained_count = target_counts.get(0, 0)
-    churn_count = target_counts.get(1, 1)
+    churn_count = target_counts.get(1, 0)
     imbalance_ratio = retained_count / max(churn_count, 1)
 
-    numeric_cols = df.select_dtypes(include=[np.number]).columns.drop(target_col, errors='ignore').tolist()
-    categorical_cols = df.select_dtypes(exclude=[np.number]).columns.tolist()
+    # 2. Separate numeric from categorical features safely
+    numeric_cols = [
+        c for c in df.select_dtypes(include=[np.number]).columns 
+        if c != target_col
+    ]
+    categorical_cols = [c for c in df.columns if c not in numeric_cols and c != target_col]
 
     missing_counts = df.isnull().sum()
     missing_dict = missing_counts[missing_counts > 0].to_dict()
-
     cardinality_dict = {col: int(df[col].nunique()) for col in categorical_cols}
 
-    # Point-biserial correlation for numeric features with binary target
-    corr_series = df[numeric_cols + [target_col]].corr()[target_col].drop(target_col, errors='ignore')
-    correlations = corr_series.sort_values(ascending=False).to_dict()
+    # 3. Compute point-biserial correlations safely via NumPy (immune to PyArrow type errors)
+    correlations = {}
+    for col in numeric_cols:
+        try:
+            col_series = pd.to_numeric(df[col], errors='coerce')
+            valid_mask = col_series.notna() & target_series.notna()
+            if valid_mask.sum() > 1:
+                r = float(np.corrcoef(col_series[valid_mask], target_series[valid_mask])[0, 1])
+                if not np.isnan(r):
+                    correlations[col] = r
+        except Exception:
+            pass
 
-    report = {
+    correlations = dict(sorted(correlations.items(), key=lambda x: x[1], reverse=True))
+
+    return {
         "total_rows": int(df.shape[0]),
         "total_features": int(df.shape[1] - 1),
         "target_col": target_col,
@@ -54,11 +64,9 @@ def generate_eda_report(df: pd.DataFrame, target_col: str = "Churn") -> Dict[str
         "cardinality": cardinality_dict,
         "numeric_correlations": correlations
     }
-    return report
 
 
 def print_eda_report(report: Dict[str, Any]) -> None:
-    """Renders the EDA report into a structured console output."""
     print("=" * 65)
     print("                 AUTOMATED DATA PROFILE REPORT                   ")
     print("=" * 65)
