@@ -59,3 +59,8 @@ desktop.ini
 
 # Streamlit local state
 .streamlit/secrets.toml
+
+# Agent Skills & Instruction Guides
+.skills/
+app/.skills/
+**/.skills/
