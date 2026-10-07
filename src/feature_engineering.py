@@ -35,6 +35,13 @@ def engineer_features(df: pd.DataFrame) -> Tuple[pd.DataFrame, List[str]]:
     """
     df_feat = df.copy()
 
+    # Ensure TotalCharges is numeric if provided as raw string/object from CSV
+    if 'TotalCharges' in df_feat.columns and not pd.api.types.is_numeric_dtype(df_feat['TotalCharges']):
+        df_feat['TotalCharges'] = pd.to_numeric(
+            df_feat['TotalCharges'].replace(" ", np.nan),
+            errors='coerce'
+        ).fillna(0.0)
+
     # Feature 1: Charge Discrepancy (Rate Shock Indicator)
     # Guard against division by zero for new customers with tenure == 0
     safe_tenure = df_feat['tenure'].replace(0, 1)

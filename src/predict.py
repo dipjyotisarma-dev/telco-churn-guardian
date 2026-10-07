@@ -9,7 +9,11 @@ from typing import Dict, Any, Union
 from pathlib import Path
 import joblib
 import pandas as pd
-from feature_engineering import engineer_features
+
+try:
+    from src.feature_engineering import engineer_features
+except ImportError:  # Fallback for direct `python src/predict.py` execution
+    from feature_engineering import engineer_features
 
 
 # Resolve path relative to repository root
