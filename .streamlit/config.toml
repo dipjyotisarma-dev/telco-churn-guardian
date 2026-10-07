@@ -1,0 +1,14 @@
+[theme]
+primaryColor = "#0284c7"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8fafc"
+textColor = "#0f172a"
+font = "sans serif"
+showWidgetBorder = true
+borderColor = "rgba(128, 128, 128, 0.35)"
+
+[client]
+showErrorDetails = true
+
+[server]
+headless = true

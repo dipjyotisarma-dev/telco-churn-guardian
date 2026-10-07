@@ -1,0 +1,421 @@
+/* ==============================================================================
+   TelcoChurn Guardian: Enterprise Design System (Stripe / Linear Inspired)
+   Universal Dual-Theme Support (Light & Dark), Zero AI Slop, High Data Density
+   ============================================================================== */
+
+:root,
+.stApp {
+  --tg-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --tg-primary: #0284c7;
+  --tg-primary-hover: #0369a1;
+
+  --tg-card-border: rgba(128, 128, 128, 0.18);
+  --tg-card-bg: var(--secondary-background-color, rgba(128, 128, 128, 0.05));
+  --tg-muted-text: rgba(128, 128, 128, 0.9);
+
+  /* Universal Accessible Status Badges (At least 4.5:1 WCAG contrast on Light & Dark) */
+  --tg-safe-bg: rgba(16, 185, 129, 0.16);
+  --tg-safe-text: #10b981;
+  --tg-safe-border: rgba(16, 185, 129, 0.35);
+
+  --tg-mod-bg: rgba(245, 158, 11, 0.16);
+  --tg-mod-text: #f59e0b;
+  --tg-mod-border: rgba(245, 158, 11, 0.35);
+
+  --tg-crit-bg: rgba(239, 68, 68, 0.16);
+  --tg-crit-text: #ef4444;
+  --tg-crit-border: rgba(239, 68, 68, 0.35);
+
+  --tg-info-bg: rgba(2, 132, 199, 0.16);
+  --tg-info-text: #0284c7;
+  --tg-info-border: rgba(2, 132, 199, 0.35);
+}
+
+/* Base application tweaks for high density */
+.main .block-container {
+  padding-top: 1.25rem !important;
+  padding-bottom: 2rem !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  max-width: 100% !important;
+}
+
+/* Header container */
+.tg-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+}
+
+.tg-header-title-group h1 {
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  color: var(--text-color, inherit) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  letter-spacing: -0.02em;
+}
+
+.tg-header-title-group p {
+  font-size: 0.875rem !important;
+  color: rgba(128, 128, 128, 0.9) !important;
+  margin: 0.2rem 0 0 0 !important;
+}
+
+/* Card components - adapts dynamically to both light & dark themes */
+.tg-card {
+  background-color: var(--secondary-background-color, rgba(128, 128, 128, 0.05));
+  border: 1px solid rgba(128, 128, 128, 0.18);
+  border-radius: 8px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  color: var(--text-color, inherit);
+  transition: border-color 0.15s ease-in-out;
+}
+
+.tg-card:hover {
+  border-color: rgba(2, 132, 199, 0.4);
+}
+
+.tg-card-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(128, 128, 128, 0.9);
+  margin-bottom: 0.4rem;
+}
+
+.tg-card-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-color, inherit);
+  line-height: 1.2;
+}
+
+.tg-card-desc {
+  font-size: 0.78rem;
+  color: rgba(128, 128, 128, 0.85);
+  margin-top: 0.35rem;
+  line-height: 1.35;
+}
+
+/* Semantic Badges */
+.tg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.tg-badge-safe {
+  background-color: var(--tg-safe-bg);
+  color: var(--tg-safe-text);
+  border-color: var(--tg-safe-border);
+}
+
+.tg-badge-moderate {
+  background-color: var(--tg-mod-bg);
+  color: var(--tg-mod-text);
+  border-color: var(--tg-mod-border);
+}
+
+.tg-badge-critical {
+  background-color: var(--tg-crit-bg);
+  color: var(--tg-crit-text);
+  border-color: var(--tg-crit-border);
+}
+
+.tg-badge-info {
+  background-color: var(--tg-info-bg);
+  color: var(--tg-info-text);
+  border-color: var(--tg-info-border);
+}
+
+/* Compact metric cards override */
+[data-testid="stMetric"] {
+  background-color: var(--secondary-background-color, rgba(128, 128, 128, 0.05)) !important;
+  border: 1px solid rgba(128, 128, 128, 0.18) !important;
+  border-radius: 8px !important;
+  padding: 0.65rem 0.85rem !important;
+}
+
+[data-testid="stMetricLabel"] p {
+  font-size: 0.74rem !important;
+  font-weight: 600 !important;
+  color: rgba(128, 128, 128, 0.9) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+[data-testid="stMetricValue"] div {
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  color: var(--text-color, inherit) !important;
+}
+
+/* Form Container Styling */
+[data-testid="stForm"] {
+  border: 1px solid rgba(128, 128, 128, 0.18) !important;
+  border-radius: 8px !important;
+  background-color: var(--secondary-background-color, rgba(128, 128, 128, 0.04)) !important;
+  padding: 1rem 1.15rem !important;
+}
+
+/* Form Section Title */
+.tg-form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(128, 128, 128, 0.95);
+  margin: 0.8rem 0 0.5rem 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+/* Prevent label wrapping */
+[data-testid="stForm"] label p,
+[data-testid="stSelectbox"] label p,
+[data-testid="stNumberInput"] label p,
+[data-testid="stTextInput"] label p {
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  color: var(--text-color, inherit) !important;
+  opacity: 0.88 !important;
+  letter-spacing: 0.01em !important;
+  margin-bottom: 0.15rem !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Tabs inside form */
+[data-testid="stForm"] [data-testid="stTabs"] [data-baseweb="tab-list"] {
+  gap: 0.35rem !important;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.18) !important;
+  margin-bottom: 0.75rem !important;
+}
+
+[data-testid="stForm"] [data-testid="stTabs"] [data-baseweb="tab"] {
+  padding: 0.35rem 0.75rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px 6px 0 0 !important;
+}
+
+/* Segmented Control Styling */
+[data-testid="stSegmentedControl"] {
+  width: 100% !important;
+}
+
+[data-testid="stSegmentedControl"] div[data-baseweb="button-group"] {
+  width: 100% !important;
+  display: flex !important;
+}
+
+[data-testid="stSegmentedControl"] button {
+  flex: 1 !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 0.25rem 0.45rem !important;
+  white-space: nowrap !important;
+}
+
+/* ==============================================================================
+   Defined Outlines & Borders for All Selectboxes, Number Inputs & Text Inputs
+   Guarantees visible resting-state boxes matching segmented controls in both themes
+   ============================================================================== */
+
+/* 1. Selectbox Dropdowns: resting state box outline */
+div[data-testid="stSelectbox"] div[role="group"],
+div[data-testid="stSelectbox"] .react-aria-Group,
+div[data-testid="stSelectbox"] div[class*="e1fp86qc"],
+div[data-testid="stSelectbox"] > div:not([data-testid="stWidgetLabel"]),
+div.stSelectbox div[role="group"],
+div[data-baseweb="select"] > div,
+div[data-baseweb="select"] {
+  border: 1px solid rgba(128, 128, 128, 0.35) !important;
+  background-color: var(--background-color, #ffffff) !important;
+  border-radius: 6px !important;
+  min-height: 38px !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+/* Selectbox: Hover state */
+div[data-testid="stSelectbox"] div[role="group"]:hover,
+div[data-testid="stSelectbox"] .react-aria-Group:hover,
+div[data-testid="stSelectbox"] div[class*="e1fp86qc"]:hover,
+div[data-testid="stSelectbox"] > div:not([data-testid="stWidgetLabel"]):hover,
+div.stSelectbox div[role="group"]:hover,
+div[data-baseweb="select"] > div:hover,
+div[data-baseweb="select"]:hover {
+  border-color: rgba(2, 132, 199, 0.65) !important;
+}
+
+/* Selectbox: Focused / Active / Open state (clean primary blue ring) */
+div[data-testid="stSelectbox"] div[role="group"]:focus-within,
+div[data-testid="stSelectbox"] div[role="group"][data-focus-within],
+div[data-testid="stSelectbox"] .react-aria-Group:focus-within,
+div[data-testid="stSelectbox"] .react-aria-Group[data-focus-within],
+div[data-testid="stSelectbox"] div[class*="e1fp86qc"]:focus-within,
+div[data-testid="stSelectbox"] > div:not([data-testid="stWidgetLabel"]):focus-within,
+div.stSelectbox div[role="group"]:focus-within,
+div[data-baseweb="select"] > div:focus-within,
+div[data-baseweb="select"]:focus-within {
+  border-color: var(--tg-primary, #0284c7) !important;
+  box-shadow: 0 0 0 1px var(--tg-primary, #0284c7) !important;
+}
+
+/* 2. Number Inputs: resting state box outline */
+div[data-testid="stNumberInputContainer"],
+div[data-testid="stNumberInput"] div[data-testid="stNumberInputContainer"],
+div.stNumberInput div[data-testid="stNumberInputContainer"],
+div[data-testid="stNumberInput"] div[class*="e1rv0tzo"],
+div[data-testid="stNumberInput"] [data-baseweb="input"],
+div[data-baseweb="input"] {
+  border: 1px solid rgba(128, 128, 128, 0.35) !important;
+  background-color: var(--background-color, #ffffff) !important;
+  border-radius: 6px !important;
+  min-height: 38px !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+/* Number Inputs: Hover state */
+div[data-testid="stNumberInputContainer"]:hover,
+div[data-testid="stNumberInput"] div[data-testid="stNumberInputContainer"]:hover,
+div[data-testid="stNumberInput"] [data-baseweb="input"]:hover,
+div[data-baseweb="input"]:hover {
+  border-color: rgba(2, 132, 199, 0.65) !important;
+}
+
+/* Number Inputs: Focused state (clean primary blue ring) */
+div[data-testid="stNumberInputContainer"]:focus-within,
+div[data-testid="stNumberInputContainer"][data-focus-within],
+div[data-testid="stNumberInput"] div[data-testid="stNumberInputContainer"]:focus-within,
+div[data-testid="stNumberInput"] [data-baseweb="input"]:focus-within,
+div[data-baseweb="input"]:focus-within {
+  border-color: var(--tg-primary, #0284c7) !important;
+  box-shadow: 0 0 0 1px var(--tg-primary, #0284c7) !important;
+}
+
+/* 3. Text Inputs & Text Areas: resting state box outline */
+div[data-testid="stTextInputRootElement"],
+div[data-testid="stTextInput"] div[data-testid="stTextInputRootElement"],
+div.stTextInput div[data-testid="stTextInputRootElement"],
+div[data-testid="stTextAreaRootElement"],
+div[data-testid="stTextArea"] div[data-testid="stTextAreaRootElement"] {
+  border: 1px solid rgba(128, 128, 128, 0.35) !important;
+  background-color: var(--background-color, #ffffff) !important;
+  border-radius: 6px !important;
+  min-height: 38px !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+/* Text Inputs: Focused state */
+div[data-testid="stTextInputRootElement"]:focus-within,
+div[data-testid="stTextInputRootElement"][data-focus-within],
+div[data-testid="stTextAreaRootElement"]:focus-within {
+  border-color: var(--tg-primary, #0284c7) !important;
+  box-shadow: 0 0 0 1px var(--tg-primary, #0284c7) !important;
+}
+
+/* 4. Child Elements inside containers (prevent double-borders and misalignments) */
+div[data-testid="stSelectbox"] input,
+div[data-testid="stNumberInputContainer"] input,
+div[data-testid="stTextInputRootElement"] input,
+div[data-baseweb="input"] input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  font-size: 0.85rem !important;
+  padding: 0.35rem 0.55rem !important;
+  color: var(--text-color, inherit) !important;
+}
+
+div[data-testid="stNumberInputContainer"] button,
+div[data-baseweb="input"] button {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: var(--text-color, inherit) !important;
+  opacity: 0.8 !important;
+  transition: opacity 0.15s ease-in-out, background-color 0.15s ease-in-out !important;
+}
+
+div[data-testid="stNumberInputContainer"] button:hover,
+div[data-baseweb="input"] button:hover {
+  opacity: 1 !important;
+  background: rgba(128, 128, 128, 0.12) !important;
+}
+
+div[data-testid="stSelectbox"] button {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: var(--text-color, inherit) !important;
+}
+
+/* Sliders */
+[data-testid="stSlider"] {
+  padding-top: 0.1rem !important;
+  padding-bottom: 0.1rem !important;
+}
+
+/* Primary Button */
+button[kind="primary"] {
+  background-color: var(--tg-primary) !important;
+  border-color: var(--tg-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+button[kind="primary"]:hover {
+  background-color: var(--tg-primary-hover) !important;
+  border-color: var(--tg-primary-hover) !important;
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.25) !important;
+}
+
+/* Global Tab styling */
+[data-testid="stTabs"] [data-baseweb="tab-list"] {
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+}
+
+[data-testid="stTabs"] [data-baseweb="tab"] {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Table / Dataframe polish */
+[data-testid="stDataFrame"] {
+  border: 1px solid rgba(128, 128, 128, 0.18);
+  border-radius: 8px;
+  overflow: hidden;
+}
